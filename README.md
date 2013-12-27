@@ -1,7 +1,7 @@
 PHPWord_CloneRow
 ================
 
-Extension for PHPWord. New public method cloneRow() for clone rows and merged rows in tables
+Extension for PHPWord. New public method cloneRow() for clone rows and merged rows in tables.
 Based on PHPWord (http://phpword.codeplex.com/).
 
 
