@@ -17,9 +17,9 @@ OR
 
 Folders
 -------
-PHPWord/ - PHPWord with new Template.php
-assets/ - new Template.php with new method for clone rows
-examples/ - examples
+* PHPWord/ - PHPWord with new Template.php
+* assets/ - new Template.php with new method for clone rows
+* examples/ - examples
 
 
 Copyright (c) 2013 Platonov Pavel (http://www.leng.ru)
