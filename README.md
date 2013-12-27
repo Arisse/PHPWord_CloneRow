@@ -12,6 +12,7 @@ Installation
 3. Use method cloneRow() for clone rows in tables. You can see examples here: examples/
 
 OR
+
 1. You can download PHPWord from this repo. New Template.php already inside and ready to work.
 
 
