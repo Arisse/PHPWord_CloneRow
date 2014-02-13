@@ -10,6 +10,8 @@
 	
 	// simple parsing
 	$document->setValue('{var1}', 'value');
+	$document->setValue('{var2}', 'Clone');
+	$document->setValue('{var3}', 'ONE', 1);
 	
 	// prepare data for tables
 	$data1 = array(
@@ -29,11 +31,18 @@
 		'dw' => array('SSE at 3 mph', 'SE at 2 mph', 'S at 3 mph', 'S at 1 mph', 'Calm'),
 		'nw' => array('SSE at 1 mph', 'SE at 1 mph', 'S at 1 mph', 'Calm', 'Calm')		
 	);
+	$data4 = array(
+		'val1' => array('blue 1', 'blue 2', 'blue 3'),
+		'val2' => array('green 1', 'green 2', 'green 3'),
+		'val3' => array('red 1', 'red 2', 'red 3')
+	);
 		
 	// clone rows	
 	$document->cloneRow('TBL1', $data1);
 	$document->cloneRow('TBL2', $data2);
 	$document->cloneRow('DATA3', $data3);
+	$document->cloneRow('T4', $data4);
+	$document->cloneRow('DinamicTable', $data4);
 	
 	// save file
 	$tmp_file = 'result.docx';

@@ -110,7 +110,10 @@ class PHPWord_Template {
 			$no_tag = strip_tags($match);
 			if ($no_tag == $search) {
 				$match = '{'.$match.'}';
-				$this->_documentXML = preg_replace($match, $replace, $this->_documentXML, $limit);
+				$this->_documentXML = preg_replace($match, $replace, $this->_documentXML, $limit);	
+				if ($limit == 1) {
+					break;
+				}			
 			}
 		}
 	}
@@ -141,12 +144,12 @@ class PHPWord_Template {
 	* @param string $search
 	* @param array $data
 	*/
-	public function cloneRow($search, $data=array()) {
-		// remove ooxml-tags inside pattern
+	public function cloneRow($search, $data=array()) {		
+		// remove ooxml-tags inside pattern				
 		foreach ($data as $nn => $fieldset) {
 			foreach ($fieldset as $field => $val) {
 				$key = '{'.$search.'.'.$field.'}';
-				$this->setValue($key, $key);
+				$this->setValue($key, $key, 1);
 			}
 		}
 		// how many clons we need
@@ -191,16 +194,15 @@ class PHPWord_Template {
 							// This row don't have any patterns. It's table header or footer
 							if (!$isUpdate and $isFind) {
 								// This is table footer
-								// Insert new rows before footer
-								for ($i = 1; $i < $numberOfClones; $i++) {
-									foreach ($patterns as $pattern) {
-										$new_row = $pattern->cloneNode(true);
-										$table->insertBefore($new_row, $row);
-									}
-								}
+								// Insert new rows before footer								
+								$this->InsertNewRows($table, $patterns, $row, $numberOfClones);
 								$isUpdate = true;
 							}
 						}
+					}
+					// if table without footer					
+					if (!$isUpdate and $isFind) {
+						$this->InsertNewRows($table, $patterns, $row, $numberOfClones);
 					}
 				}
 			}
@@ -214,6 +216,23 @@ class PHPWord_Template {
 				foreach ($dataArr as $value) {
 					$this->setValue($pattern, $value, 1);
 				}
+			}
+		}
+	}
+	
+	/**
+	* Insert new rows in table
+	*
+	* @param object &$table
+	* @param object $patterns
+	* @param object $row
+	* @param int $numberOfClones
+	*/
+	protected function InsertNewRows(&$table, $patterns, $row, $numberOfClones)	{
+		for ($i = 1; $i < $numberOfClones; $i++) {
+			foreach ($patterns as $pattern) {
+				$new_row = $pattern->cloneNode(true);
+				$table->insertBefore($new_row, $row);
 			}
 		}
 	}
