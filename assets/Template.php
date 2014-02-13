@@ -111,7 +111,6 @@ class PHPWord_Template {
 			if ($no_tag == $search) {
 				$match = '{'.$match.'}';
 				$this->_documentXML = preg_replace($match, $replace, $this->_documentXML, $limit);
-				break;
 			}
 		}
 	}
@@ -143,7 +142,13 @@ class PHPWord_Template {
 	* @param array $data
 	*/
 	public function cloneRow($search, $data=array()) {
-
+		// remove ooxml-tags inside pattern
+		foreach ($data as $nn => $fieldset) {
+			foreach ($fieldset as $field => $val) {
+				$key = '{'.$search.'.'.$field.'}';
+				$this->setValue($key, $key);
+			}
+		}
 		// how many clons we need
 		$numberOfClones = 0;
 		if (is_array($data)) {
