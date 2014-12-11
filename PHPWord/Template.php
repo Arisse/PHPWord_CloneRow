@@ -105,6 +105,9 @@ class PHPWord_Template {
 		if(substr($search, 0, 1) !== '{' && substr($search, -1) !== '}') {
 			$search = '{'.$search.'}';
 		}
+
+		$replace = substr('&', '&amp;', $replace);
+
 		preg_match_all('/\{[^}]+\}/', $this->_documentXML, $matches);
 		foreach ($matches[0] as $k => $match) {
 			$no_tag = strip_tags($match);
