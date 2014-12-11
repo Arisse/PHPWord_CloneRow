@@ -106,7 +106,7 @@ class PHPWord_Template {
 			$search = '{'.$search.'}';
 		}
 
-		$replace = substr('&', '&amp;', $replace);
+		$replace = str_replace('&', '&amp;', $replace);
 
 		preg_match_all('/\{[^}]+\}/', $this->_documentXML, $matches);
 		foreach ($matches[0] as $k => $match) {
