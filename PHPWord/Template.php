@@ -106,7 +106,7 @@ class PHPWord_Template {
 			$search = '{'.$search.'}';
 		}
 
-		$replace = substr('&', '&amp;', $replace);
+		$replace = str_replace('&', '&amp;', $replace);
 
 		preg_match_all('/\{[^}]+\}/', $this->_documentXML, $matches);
 		foreach ($matches[0] as $k => $match) {
@@ -168,10 +168,11 @@ class PHPWord_Template {
 		}
 		if ($numberOfClones > 0) {
 			// read document as XML
-			$xml = DOMDocument::loadXML($this->_documentXML, LIBXML_NOENT | LIBXML_XINCLUDE | LIBXML_NOERROR | LIBXML_NOWARNING);
+			$dom = new DOMDocument();
+			$dom->loadXML($this->_documentXML, LIBXML_NOENT | LIBXML_XINCLUDE | LIBXML_NOERROR | LIBXML_NOWARNING);
 
 			// search for tables
-			$tables = $xml->getElementsByTagName('tbl');
+			$tables = $dom->getElementsByTagName('tbl');
 			foreach ($tables as $table) {
 				$text = $table->textContent;
 				// search for pattern. Like {TBL1.
@@ -183,7 +184,7 @@ class PHPWord_Template {
 					$isFind = false;
 					foreach ($rows as $row) {
 						$text = $row->textContent;
-						$TextWithTags = $xml->saveXML($row);
+						$TextWithTags = $dom->saveXML($row);
 						if (
 							mb_strpos($text, '{'.$search.'.') !== false // Pattern found in this row
 							OR
@@ -210,7 +211,7 @@ class PHPWord_Template {
 				}
 			}
 			// save document
-			$res_string = $xml->saveXML();
+			$res_string = $dom->saveXML();
 			$this->_documentXML = $res_string;
 	
 			// parsing data
